@@ -17,6 +17,7 @@ import {
     Upload,
     Button,
     Icon,
+    Input,
     } from 'antd';
 
 import config from '../../config/config';
@@ -63,12 +64,22 @@ export default (props) =>{
                     <h2>
                         上传文件
                     </h2>
-                    <Upload {...uploadProps}>
+                    {/* <Upload {...uploadProps}>
                         <Button>
                             <Icon type="upload"/> 上传
                         </Button>
-                    </Upload>
-                    <image src={indexInfo.fileList?indexInfo.fileList[0].url:null}/>
+                    </Upload> */}
+                
+                    {/* <img src={indexInfo.fileList?indexInfo.fileList[0].url:null}/> */}
+                    <div>
+                        <h5>
+                            1.txt
+                        </h5>
+                        <Input 
+                          value =  {indexInfo.fileList.content}
+                        />
+                        <div>{console.log(indexInfo.fileList)}</div>
+                    </div>
                 </div>
             </Content>
         </Layout>

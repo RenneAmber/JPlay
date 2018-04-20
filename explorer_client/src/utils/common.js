@@ -98,9 +98,10 @@ export function fetchGet(url,body={},callBack, extra, dispatch, userNickName = "
 
         return fetch(serverURL, fetchParams).then(
             response=>checkFetchStatus(response)
-        ).then(data=>{
+        ).then(
+            data=>{
                 handleFetchResponse(url,1,data,extra,dispatch);
                 callBack(data);
             }
-    ).catch(err=>console.log(err.message));
+    ).catch(err=>console.log(err));
 }

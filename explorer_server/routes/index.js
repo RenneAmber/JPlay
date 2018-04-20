@@ -10,7 +10,9 @@ let iRet = require('../logic/logicCommon').iRet,
     fs = require("fs"),
     CODE = require("../logic/returnObj").CODE,
     MESSAGE = require("../logic/returnObj").MESSAGE,
-    common = require('../logic/logicCommon')
+    common = require('../logic/logicCommon'),
+    url = require("url"),
+    iconv = require('iconv-lite')
     ;
 
 
@@ -42,21 +44,70 @@ router.get('/:action',(req,res)=>{
         case 'showAllFiles':
             // TODO: 检查参数
             // 执行显示所有文件逻辑
-            var filePath = path.resolve(__dirname, '..') + "/public/images/default";
-            fs.readdir( filePath, (err, files)=>{
-                if( err ){
-                    console.log( "Show files error:",err);
+            let staticPath = path.resolve(__dirname, '..') + "/public/images/default/";
+            let pathName = url.parse(req.url).pathname;
+            let fileName = "0.txt"
+            let realPath = path.join(staticPath, fileName); // 请求文件的在磁盘中的真实地址
+            console.log("[index showAllFiles] pathName = ",pathName,"\nrealPath = ",realPath);
+            fs.readFile(realPath,
+                // "binary",
+                {encoding:'utf-8'},
+                (err,file)=>{
+                if(err){
+                    console.log( "[index showAllFiles - when read file] error:",err);
                     retf(iRet(CODE.ERROR_PARAM,err.message));
                 }else{
-                    let data = 
-                    {
-                        filePath:filePath,
-                        files:files
-                    }
-                    console.log("[routes/index showAllFiles() : res is ",data);   
-                    retf(iRet(CODE.SUCCESS, MESSAGE.SUCCESS.SHOW_ALL_FILES, data));
-                }   
+                    // res.writeHead(200, {
+                    //     'Content-Type': 'text/html'
+                    // });
+                    // let data=JSON.parse(file);  
+                    // console.log(data[0]); 
+                    file = iconv.decode(file, 'gbk')
+                    console.log(file);
+                    retf(iRet(CODE.SUCCESS, MESSAGE.SUCCESS.SHOW_ALL_FILES, file));
+                    // res.write(file, 'binary');
+            
+                    // res.end();
+                    // console.log(file);
+                    // retf(iRet(CODE.SUCCESS, MESSAGE.SUCCESS.SHOW_ALL_FILES, file));
+                }
             });
+            // fs.readdir( filePath, (err, files)=>{
+            //     if( err ){
+            //         console.log( "[index showAllFiles - when read directory] error:",err);
+            //         retf(iRet(CODE.ERROR_PARAM,err.message));
+            //     }else{
+            //         let data = 
+            //         {
+            //             filePath:filePath,
+            //             files:files
+            //         }
+            //         res.writeHead(200, {
+            //             'Content-Type': 'text/html'
+            //         });
+
+            //         // files.map((fileName)=>{
+            //             let fileName = '1.txt'; // for test
+            //             let 
+            //             fs.readFile(path.join(filePath,fileName),"binary",(err,file)=>{
+            //                 if(err){
+            //                     console.log( "[index showAllFiles - when read file] error:",err);
+            //                     retf(iRet(CODE.ERROR_PARAM,err.message));
+            //                 }else{
+            //                     res.write(file, 'binary');
+            //                 }
+            //             });
+                        
+            //             // return true;
+            //         // })
+                  
+                  
+            //         res.end();
+                    
+
+            //         // retf(iRet(CODE.SUCCESS, MESSAGE.SUCCESS.SHOW_ALL_FILES, data));
+            //     }   
+            // });
             
             break;
         default:
@@ -67,12 +118,19 @@ router.get('/:action',(req,res)=>{
     }
 
     function retf(ret){
-        console.log("响应体为：",common.safeJSONStringify(ret),'\n');
+        console.log("[server/routes/index showAllFiles]响应体为：",common.safeJSONStringify(ret),'\n');
      
         if(typeof ret.status === 'undefined' && typeof ret.message === 'undefined')
             res.end(ret);
         else
             res.json(ret);
+     }
+
+     function binaryToFile(file,extname='.txt'){
+         switch(extname){
+             case '.txt':
+
+         }
      }
 });
 

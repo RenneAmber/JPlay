@@ -20,7 +20,9 @@ class CCompIndex extends Component{
 
     render(){
         const sCompIndexProps={
-            indexInfo:{},
+            indexInfo:{
+                fileList:this.state.ContainerIndex.FileList,
+            },
             indexProps:{},
             indexEvents:{
 
@@ -32,6 +34,7 @@ class CCompIndex extends Component{
 }
 
 CCompIndex.propTypes = {
+    ContainerIndex : PropTypes.object.isRequired,
     actionIndexShowAllFiles:PropTypes.func.isRequired,
 };
 export default CCompIndex;

@@ -18,7 +18,7 @@ export function actionIndexShowAllFiles(){
         common.fetchGet(url,{},(json)=>{
             dispatch({
                 type:ACTION_TYPE.INDEX_SHOW_ALL_FILES,
-                data: json.data
+                data: json.data,
             })
         },extra,dispatch)   // no nickname required
       

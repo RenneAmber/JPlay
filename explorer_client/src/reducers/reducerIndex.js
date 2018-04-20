@@ -9,25 +9,32 @@
 import ACTION_TYPE from '../utils/constantActionType';
 
  const initialState={
-     fileList:[]
+     FileList:{
+        content:"",
+     }
+
  };
 
  export function reducerIndex(state = initialState, action){
      switch(action.type){
         case ACTION_TYPE.INDEX_SHOW_ALL_FILES:
-            console.log(action.data);
-            let fileArray = [];
-            action.data.files.map((item,index)=>{
-                fileArray.push({
-                    uid: index*(-1),
-                    name : item,
-                    status : "done",
-                    url : action.data.filePath+'/'+item,
-                })
-            })
+            console.log("SHOW FILES DATA",action.data);
+            
+            // let fileArray = [];
+            // fileArray = action.data;
+            // action.data.files.map((item,index)=>{
+            //     fileArray.push({
+            //         uid: index*(-1),
+            //         name : item,
+            //         status : "done",
+            //         url : action.data.filePath+'/'+item,
+            //     })
+            // })
             return{
                 ...state,
-                fileList:fileArray
+                FileList:{
+                    content:action.data
+                }
             }
         default:
             return {
