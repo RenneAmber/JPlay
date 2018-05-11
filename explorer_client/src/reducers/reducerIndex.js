@@ -9,10 +9,7 @@
 import ACTION_TYPE from '../utils/constantActionType';
 
  const initialState={
-     FileList:{
-        content:"",
-     }
-
+     Files:[],  // array of {dir:'xx',fileList:[]}
  };
 
  export function reducerIndex(state = initialState, action){
@@ -35,7 +32,14 @@ import ACTION_TYPE from '../utils/constantActionType';
                 FileList:{
                     content:action.data
                 }
-            }
+            };
+
+            case ACTION_TYPE.INDEX_UNFOLD_DIR:
+                console.log(action.data);
+                this.state.Files.push(action.data);
+                return {
+                    ...state,
+                }
         default:
             return {
                 ...state,

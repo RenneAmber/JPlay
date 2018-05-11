@@ -24,3 +24,19 @@ export function actionIndexShowAllFiles(){
       
     }
 }
+
+export function actionIndexUnfoldDir(dirname){
+    let reqBody = {
+        dirname:dirname
+    },
+        extra = {},
+        reqUrl = `${config.SERVER_ADDR}${config.SERVER_API.INDEX_SHOW_ALL_FILES}`;
+    return dispatch=>{
+        common.fetchGet(reqUrl,reqBody, (json)=>{
+            dispatch({
+                type:ACTION_TYPE.INDEX_UNFOLD_DIR,
+                data:json.data,
+            })
+        },extra,dispatch);
+    }
+}

@@ -18,11 +18,15 @@ import {
     Button,
     Icon,
     Input,
+    Popover,
+    Tree,
     } from 'antd';
 
 import config from '../../config/config';
+
 const {Header, Content, Footer} = Layout;
 const TabPane = Tabs.TabPane;
+const TreeNode = Tree.TreeNode;
 
 export default (props) =>{
     const {
@@ -45,6 +49,10 @@ export default (props) =>{
         className: 'upload-list-inline',
         multiple:true,
     };
+
+    const renderDir={
+        
+    }
     
     return(
         <Layout className = "layout">
@@ -62,7 +70,7 @@ export default (props) =>{
             <Content style={indexProps.content}>
                 <div style={indexProps.inlineContent}>
                     <h2>
-                        上传文件
+                        静态资源管理器
                     </h2>
                     {/* <Upload {...uploadProps}>
                         <Button>
@@ -72,13 +80,23 @@ export default (props) =>{
                 
                     {/* <img src={indexInfo.fileList?indexInfo.fileList[0].url:null}/> */}
                     <div>
-                        <h5>
-                            1.txt
-                        </h5>
-                        <Input 
-                          value =  {indexInfo.fileList.content}
-                        />
-                        <div>{console.log(indexInfo.fileList)}</div>
+                        {/* 根目录 */}
+                        <Tree loadData={this.onLoadData}>
+                            {this.renderDir(indexInfo.treeData)}
+                        </Tree>
+                        <Button icon='folder'>
+                            public
+                        </Button>
+                        {/* <Popover
+                            title="文本内容："
+                            content={indexInfo.fileList.content}
+                            trigger="hover"
+                            placement="right"
+                            >
+                            <h5>
+                                0.txt
+                            </h5>
+                        </Popover> */}
                     </div>
                 </div>
             </Content>

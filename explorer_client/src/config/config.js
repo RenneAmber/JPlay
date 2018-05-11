@@ -26,6 +26,7 @@ export default {
     SERVER_API:{
         LOGIN_AUTH:'loginAuth',
         INDEX_SHOW_ALL_FILES:'showAllFiles',
+        INDEX_UNFOLD_DIR:'unfoldDir',
     }
 
 };
